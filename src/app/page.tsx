@@ -28,18 +28,21 @@ import {
 
 // Floating Elements Component
 const FloatingElements: React.FC = () => {
-  const [elements, setElements] = useState<{ id: number; style: React.ReactNode }[]>([]);
+  const [elements, setElements] = useState<
+    { id: number; style: React.ReactNode }[]
+  >([]);
 
   useEffect(() => {
     const newElements = [...Array(15)].map((_, i) => ({
       id: i,
-      style: i % 3 === 0 ? (
-        <Feather className="w-6 h-6 text-purple-300/40" />
-      ) : i % 3 === 1 ? (
-        <Stars className="w-4 h-4 text-yellow-300/40" />
-      ) : (
-        <Music className="w-5 h-5 text-pink-300/40" />
-      )
+      style:
+        i % 3 === 0 ? (
+          <Feather className="w-6 h-6 text-purple-300/40" />
+        ) : i % 3 === 1 ? (
+          <Stars className="w-4 h-4 text-yellow-300/40" />
+        ) : (
+          <Music className="w-5 h-5 text-pink-300/40" />
+        ),
     }));
     setElements(newElements);
   }, []);
@@ -110,28 +113,42 @@ const TypeWriter: React.FC<TypeWriterProps> = ({ text, speed = 50 }) => {
 // Theme options
 type ThemeKey = "mystical" | "sunset" | "moonlight";
 
-const themes: Record<ThemeKey, { background: string; primary: string; accent: string }> = {
+const themes: Record<
+  ThemeKey,
+  { background: string; primary: string; accent: string }
+> = {
   mystical: {
     background: "from-purple-800 via-pink-800 to-yellow-800",
-    primary: "bg-gradient-to-r from-purple-600 via-pink-600 to-yellow-600 hover:bg-gradient-to-l",
+    primary:
+      "bg-gradient-to-r from-purple-600 via-pink-600 to-yellow-600 hover:bg-gradient-to-l",
     accent: "text-purple-100",
   },
   sunset: {
     background: "from-orange-800 via-red-800 to-pink-800",
-    primary: "bg-gradient-to-r from-orange-600 via-red-600 to-pink-600 hover:bg-gradient-to-l",
+    primary:
+      "bg-gradient-to-r from-orange-600 via-red-600 to-pink-600 hover:bg-gradient-to-l",
     accent: "text-orange-100",
   },
   moonlight: {
     background: "from-blue-800 via-indigo-800 to-purple-800 ",
-    primary: "bg-gradient-to-r from-blue-600 via-indigo-600 to-purple -600 hover:bg-gradient-to-l",
+    primary:
+      "bg-gradient-to-r from-blue-600 via-indigo-600 to-purple -600 hover:bg-gradient-to-l",
     accent: "text-blue-100",
   },
 };
 
 // Poetry styles
-type PoetryStyleKey = "classical" | "modern" | "romantic" | "spiritual" | "celebrate";
+type PoetryStyleKey =
+  | "classical"
+  | "modern"
+  | "romantic"
+  | "spiritual"
+  | "celebrate";
 
-const poetryStyles: Record<PoetryStyleKey, { icon: JSX.Element; name: string }> = {
+const poetryStyles: Record<
+  PoetryStyleKey,
+  { icon: JSX.Element; name: string }
+> = {
   classical: { icon: <ScrollText />, name: "Classical" },
   modern: { icon: <Palette />, name: "Modern" },
   romantic: { icon: <Heart />, name: "Romantic" },
@@ -191,11 +208,14 @@ const MagicalPoetryExperience: React.FC = () => {
 
   const copyToClipboard = () => {
     if (poem) {
-      navigator.clipboard.writeText(poem).then(() => {
-        alert("Poetry copied to clipboard!");
-      }).catch(err => {
-        console.error("Failed to copy: ", err);
-      });
+      navigator.clipboard
+        .writeText(poem)
+        .then(() => {
+          alert("Poetry copied to clipboard!");
+        })
+        .catch((err) => {
+          console.error("Failed to copy: ", err);
+        });
     }
   };
 
@@ -223,7 +243,9 @@ const MagicalPoetryExperience: React.FC = () => {
             ))}
           </div>
           <div className="flex justify-center">
-            <Sparkles className={`w-16 h-16 ${themes[theme].accent} animate-float`} />
+            <Sparkles
+              className={`w-16 h-16 ${themes[theme].accent} animate-float`}
+            />
           </div>
         </CardContent>
         <CardFooter className="flex gap-4">
@@ -244,7 +266,9 @@ const MagicalPoetryExperience: React.FC = () => {
     <div className="min-h-screen flex items-center justify-center p-4 bg-transparent">
       <Card className="w-full max-w-2xl bg-gradient-to-r from-violet-900 via-indigo-900 to-blue-900 backdrop-blur-none shadow-none">
         <CardHeader>
-          <CardTitle className={`flex items-center gap-2 text-3xl ${themes[theme].accent}`}>
+          <CardTitle
+            className={`flex items-center gap-2 text-3xl ${themes[theme].accent}`}
+          >
             <HeartHandshake className="w-8 h-8" />
             <TypeWriter text="Choose Your Path" />
           </CardTitle>
@@ -261,12 +285,14 @@ const MagicalPoetryExperience: React.FC = () => {
           </div>
           <div className="space-y-4">
             <p className="text-gray-400">Select your desired poetry style</p>
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-2 sm:md:grid-cols-3 gap-4">
               {Object.entries(poetryStyles).map(([key, { icon, name }]) => (
                 <Button
                   key={key}
                   variant={style === key ? "default" : "outline"}
-                  className={style === key ? "bg-purple-600" : ""}
+                  className={`${
+                    style === key ? "bg-purple-600" : ""
+                  } px-16 sm:px-0 md:px-0`}
                   onClick={() => setStyle(key as PoetryStyleKey)}
                 >
                   <span className="mr-2">{icon}</span>
@@ -307,7 +333,9 @@ const MagicalPoetryExperience: React.FC = () => {
     <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-r from-teal-800 via-purple-400 to-blue-800">
       <Card className="w-full max-w-3xl bg-black/90 backdrop-blur-sm shadow-2xl">
         <CardHeader>
-          <CardTitle className={`flex items-center gap-2 ${themes[theme].accent}`}>
+          <CardTitle
+            className={`flex items-center gap-2 ${themes[theme].accent}`}
+          >
             <Sparkles className="w-6 h-6" />
             <TypeWriter text="Your Enchanted Verses" speed={100} />
           </CardTitle>
@@ -353,4 +381,4 @@ const MagicalPoetryExperience: React.FC = () => {
   );
 };
 
-export default MagicalPoetryExperience; 
+export default MagicalPoetryExperience;
